@@ -1,6 +1,6 @@
 body {
   background-color: indigo;
-  color: #fff;
+  color: #fff;  
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
   padding: 0;
@@ -33,11 +33,11 @@ button {
   background-color: #fdef05;
   border-radius: 8px;
   border-color: #ff6600;
+  font-family: inherit;
   margin: 0;
   padding: 5px 20px;
   width: 100px;
 }
-
 button:not(:last-child) {
   margin-right: 10px;
 }
@@ -47,7 +47,7 @@ button:not(:last-child) {
   flex-wrap: wrap;
   margin: 0 auto;
   width: 80%;
-  max-width: 460%;
+  max-width: 460px;
 }
 
 p {
@@ -56,7 +56,7 @@ p {
   width: 100%;
 }
 
-@media (max-width: 440px) {
+@media (max-width: 400px) {
   button { margin-top: 25px; }
   #up, #down { margin-left: 100%; margin-right: 100%; }
 }
