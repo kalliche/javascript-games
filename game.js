@@ -43,6 +43,8 @@ function startGame() {
   const mapRowCols = mapRows.map(row => row.trim().split(''));
   //console.log({map, mapRows, mapRowCols});
 
+  game.clearRect(0,0,canvasSize,canvasSize);
+
   // recorrer el array y remplaza los for de abajo
   mapRowCols.forEach((row, rowI) => {
     row.forEach((col, colI) => {
@@ -53,10 +55,11 @@ function startGame() {
       if(col == 'O') {
         //console.log({posX, posY});
         // asignamos las posiciones al objeto
-        playerPosition.x = posX;
-        playerPosition.y = posY;
+        if(!playerPosition.x && !playerPosition.y) {
+          playerPosition.x = posX;
+          playerPosition.y = posY;
+        }
       }
-
       game.fillText(emoji, posX, posY);
       // el siguiente clg imprime las posiciones del jugador
       //console.log({row, rowI, col, colI});
@@ -104,18 +107,23 @@ function moveByKeys(event) {
 function moveUp() {
   console.log('Me quiero mover hacia arriba');
   playerPosition.y -= elementsSize;
-  movePlayer();
+  startGame();
 }
 
 function moveLeft() {
   console.log('Me quero mover hacia la izquierda');
+  playerPosition.x -= elementsSize;
+  startGame();
 }
 
 function moveRight() {
   console.log('Me quiero mover hacia la derecha');
+  playerPosition.x += elementsSize;
+  startGame();
 }
 
 function moveDown() {
   console.log('Me quiero mover hacia abajo');
+  playerPosition.y += elementsSize;
+  startGame();
 }
-
