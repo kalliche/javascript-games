@@ -4,6 +4,7 @@ const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const spanLives = document.querySelector('#lives');
 
 let canvasSize;
 let elementsSize;
@@ -18,6 +19,7 @@ const giftPosition = {
   x: undefined,
   y: undefined,
 };
+
 let enemyPositions = [];
 
 window.addEventListener('load', setCanvasSize);
@@ -29,10 +31,10 @@ function setCanvasSize() {
   } else {
     canvasSize = window.innerHeight * 0.8;
   }
-  
+
   canvas.setAttribute('width', canvasSize);
   canvas.setAttribute('height', canvasSize);
-  
+
   elementsSize = canvasSize / 10;
 
   startGame();
@@ -50,11 +52,14 @@ function startGame() {
     gameWin();
     return;
   }
-  
+
   const mapRows = map.trim().split('\n');
   const mapRowCols = mapRows.map(row => row.trim().split(''));
   console.log({map, mapRows, mapRowCols});
-  
+
+  // mostrar vidas
+  showLives();
+
   enemyPositions = [];
   game.clearRect(0,0,canvasSize, canvasSize);
 
@@ -79,7 +84,7 @@ function startGame() {
           y: posY,
         });
       }
-      
+
       game.fillText(emoji, posX, posY);
     });
   });
@@ -91,7 +96,7 @@ function movePlayer() {
   const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
   const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
   const giftCollision = giftCollisionX && giftCollisionY;
-  
+
   if (giftCollision) {
     levelWin();
   }
@@ -101,7 +106,7 @@ function movePlayer() {
     const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
     return enemyCollisionX && enemyCollisionY;
   });
-  
+
   if (enemyCollision) {
     levelFail();
   }
@@ -119,8 +124,6 @@ function levelFail() {
   console.log('Chocaste contra un enemigo :(');
   lives--;
 
-  console.log(lives);
-
   if (lives <= 0) {
     level = 0;
     lives = 3;
@@ -133,6 +136,16 @@ function levelFail() {
 
 function gameWin() {
   console.log('¡Terminaste el juego!');
+}
+
+function showLives() {
+  const heartsArray = Array(lives).fill(emojis['HEART']); //[0,1,2] inserta los corazones
+  //console.log(heartsArray);
+  // solucion para mostrar corazones solucion 1
+  //spanLives.innerHTML = heartsArray;
+  // solucion para mostrar corazones solucion 2
+  spanLives.innerHTML = "";
+  heartsArray.forEach(heart => spanLives.append(heart));
 }
 
 window.addEventListener('keydown', moveByKeys);
